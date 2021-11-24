@@ -1,5 +1,5 @@
 # 2D-LED-Grid-Snake-Game
-Snake game that uses Windows CMD as GUI. Uses Windows drivers for sound effects, multi-threading and key press detection.
+Snake game that uses Windows CMD as GUI. Uses Windows drivers for sound effects, background music, multi-threading for concurrent events and key press detection.
 
 letter "G" is the snake's body, "R" is the fruit and "." is the background. To play the game, simply eat as much fruit as you can to grow your snake's body length, while avoiding hitting walls or the snake's body with its head.
 
