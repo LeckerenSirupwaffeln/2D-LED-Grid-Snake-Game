@@ -1,0 +1,61 @@
+@startuml
+
+<style>
+stateDiagram {
+  BackgroundColor Peru
+  LineColor Gray
+  FontName Verdana
+  FontColor Red
+  arrow {
+    FontSize 8
+    LineColor Blue
+  }
+}
+</style>
+
+[*] --> Configure
+Configure : General_CFG();
+Configure --> MainProgram : E_CFG_READY
+Configure --> UserInput : E_CFG_READY
+Configure --> SoundOutput : E_CFG_READY
+Configure --> [*] : E_ERROR
+
+state MainProgram {
+	MainProgram --> StartMenu : E_CONT
+	StartMenu : Game_StartMenu(&CurrentSound,&CurrentState, &LEDGrid);
+	
+	
+	StartMenu --> [*] : E_SP_KEY
+	
+	StartMenu --> Test : E_TEST_KEY
+	Test : TestOutput(&CurrentState, &CurrentSound, &LEDGrid);
+	Test --> StartMenu : E_RETURN
+	
+	StartMenu --> GameConfigure : E_SR_KEY
+	GameConfigure : Game_CFG(&CurrentState);
+	GameConfigure --> SnakeGame : E_CFG_READY
+	SnakeGame --> GameConfigure : E_SR_KEY
+	
+	SnakeGame : Game_Snake(&CurrentState, &CurrentDirection, &CurrentSound, &LEDGrid);
+	
+	SnakeGame --> PauseMenu : E_SP_KEY
+	PauseMenu --> SnakeGame : E_SR_KEY
+	PauseMenu : Game_PauseMenu(&CurrentSound,&CurrentState, &LEDGrid);
+	
+	PauseMenu --> StartMenu : E_SP_KEY
+	
+	SnakeGame --> StartMenu : E_SNAKE_COLLISION
+	
+	
+	
+	
+}
+
+UserInput : Check_User_Input(&CurrentDirection, &CurrentSound, &CurrentState );
+
+
+SoundOutput : Sound_Control(&CurrentSound, &CurrentState);
+
+
+
+@enduml
